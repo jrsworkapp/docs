@@ -1,0 +1,78 @@
+{
+  "data": [
+    {
+      "groupName": "Jurídico",
+      "groupIcon": "scale",
+      "apis": [
+        {
+          "name": "Contratos API",
+          "description": "Gerenciamento de contratos jurídicos.",
+          "icon": "file-text",
+          "swaggerUrl": "#",
+          "redocUrl": "#"
+        },
+        {
+          "name": "Processos API",
+          "description": "Controle de processos jurídicos internos.",
+          "icon": "briefcase",
+          "swaggerUrl": "#",
+          "redocUrl": "#"
+        },
+        {
+          "name": "Contratos API",
+          "description": "Gerenciamento de contratos jurídicos.",
+          "icon": "file-text",
+          "swaggerUrl": "#",
+          "redocUrl": "#"
+        },
+        {
+          "name": "Processos API",
+          "description": "Controle de processos jurídicos internos.",
+          "icon": "briefcase",
+          "swaggerUrl": "#",
+          "redocUrl": "#"
+        },
+        {
+          "name": "Contratos API",
+          "description": "Gerenciamento de contratos jurídicos.",
+          "icon": "file-text",
+          "swaggerUrl": "#",
+          "redocUrl": "#"
+        },
+        {
+          "name": "Processos API",
+          "description": "Controle de processos jurídicos internos.",
+          "icon": "briefcase",
+          "swaggerUrl": "#",
+          "redocUrl": "#"
+        }
+      ]
+    },
+    {
+      "groupName": "Financeiro",
+      "groupIcon": "dollar-sign",
+      "apis": [
+        {
+          "name": "Faturas API",
+          "description": "Consulta e gestão de faturas de clientes.",
+          "icon": "credit-card",
+          "swaggerUrl": "#",
+          "redocUrl": "#"
+        }
+      ]
+    },
+    {
+      "groupName": "Cobrança",
+      "groupIcon": "wallet",
+      "apis": [
+        {
+          "name": "Acordo API",
+          "description": "Consulta e gestão de acordo com devedores.",
+          "icon": "handshake",
+          "swaggerUrl": "#",
+          "redocUrl": "#"
+        }
+      ]
+    }
+  ]
+}
