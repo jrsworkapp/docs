@@ -1,0 +1,153 @@
+{
+  "title": "K8s .NET API Observability (Loki)",
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "10s",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Requests per Second (RPS)",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [
+        {
+          "expr": "sum(rate({app=\"orders-api\"} |= \"HTTP\" | json [1m]))",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 5, "w": 6, "x": 0, "y": 0 }
+    },
+    {
+      "type": "stat",
+      "title": "Error Rate %",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [
+        {
+          "expr": "(sum(rate({app=\"orders-api\"} | json | status >= 500 [5m])) / sum(rate({app=\"orders-api\"} | json [5m]))) * 100",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 5, "w": 6, "x": 6, "y": 0 }
+    },
+    {
+      "type": "stat",
+      "title": "Latency p95 (ms)",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [
+        {
+          "expr": "quantile_over_time(0.95, {app=\"orders-api\"} | json | unwrap duration_ms [5m])",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 5, "w": 6, "x": 12, "y": 0 }
+    },
+    {
+      "type": "stat",
+      "title": "OOM / Crash Logs",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [
+        {
+          "expr": "count_over_time({namespace=\"prod\"} |= \"OOMKilled\" [5m])",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 5, "w": 6, "x": 18, "y": 0 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Requests per Endpoint",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [
+        {
+          "expr": "sum by (route)(rate({app=\"orders-api\"} | json | route!=\"\" [1m]))",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 5 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Errors per Endpoint",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [
+        {
+          "expr": "sum by (route)(rate({app=\"orders-api\"} | json | status >= 500 [5m]))",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 5 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Latency p95 per Endpoint",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [
+        {
+          "expr": "quantile_over_time(0.95, {app=\"orders-api\"} | json | unwrap duration_ms [5m]) by (route)",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 13 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Requests per Pod",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [
+        {
+          "expr": "sum by (pod)(rate({app=\"orders-api\"} | json [1m]))",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 13 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Errors per Pod",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [
+        {
+          "expr": "sum by (pod)(rate({app=\"orders-api\"} | json | status >= 500 [5m]))",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 21 }
+    },
+    {
+      "type": "bargauge",
+      "title": "Top Exceptions",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [
+        {
+          "expr": "sum by (exception)(rate({app=\"orders-api\"} |= \"Exception\" | json [5m]))",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 21 }
+    },
+    {
+      "type": "timeseries",
+      "title": "401/403 Security Events",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [
+        {
+          "expr": "sum(rate({app=\"orders-api\"} | json | status=401 or status=403 [5m]))",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 29 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Business Event: Orders Created",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "targets": [
+        {
+          "expr": "sum(rate({app=\"orders-api\"} |= \"order_created\" [1m]))",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 29 }
+    }
+  ]
+}
